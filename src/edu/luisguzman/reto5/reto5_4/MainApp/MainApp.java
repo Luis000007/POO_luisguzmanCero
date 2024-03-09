@@ -1,5 +1,8 @@
 package edu.luisguzman.reto5.reto5_4.MainApp;
 
+import edu.luisguzman.reto5.reto5_4.process.AgendaTelefonica;
+import edu.luisguzman.reto5.reto5_4.process.Contacto;
+
 public class MainApp {
     public static void main(String[] args) {
         // Crear algunos contactos
