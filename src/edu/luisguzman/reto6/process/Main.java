@@ -9,3 +9,5 @@ public class Main {
         Empleado.main(args);
     }
 }
+
+/* La clase main manda a llamar las dos clases Categorias y Empleado */

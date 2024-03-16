@@ -13,5 +13,10 @@ public class Empleado {
     }
 
     public static void main(String[] args) {
+
     }
 }
+
+/* En esta clase, para no hacer la clase "Categorias mas larga, decidi hacer una clase co variables que
+almacen los datos necesarios y mandalos a llamar con un metodo
+ */

@@ -109,3 +109,9 @@ public class Categorias {
 }
 
 
+/* AL principio del codigo se declaran las todas que almacenan la informacion del reporte de la nomina,
+Y en si el funcionamiento del codigo se basa en un swich case, que dependiendo de la categoria a la que
+pertenezca el usuario, se le implementara una situacion distinta, en este caso, su sueldo.
+Y para agregar mas empleados a la nomina, de debera responder con un si o no, esto se logra por medio de un
+bucle while
+ */
