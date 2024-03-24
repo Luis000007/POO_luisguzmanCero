@@ -4,17 +4,30 @@ import edu.luisguzman.reto7_2.process.*;
 
 import java.util.Scanner;
 
+/**
+ * Esta clase representa la interfaz de línea de comandos (CLI) para interactuar con las operaciones matemáticas.
+ */
 public class CLI {
 
     private static Idiomas idiomas;
 
     private static final Scanner sc = new Scanner(System.in);
 
+    /**
+     * Punto de entrada principal del programa.
+     * Configura el idioma y lanza la aplicación.
+     *
+     * @param args Los argumentos de la línea de comandos (no utilizados en este caso).
+     */
     public static void main(String[] args) {
         idiomas = new Esp(); // Por defecto en español
         launchApp();
     }
 
+    /**
+     * Muestra el menú para seleccionar el idioma.
+     * Configura el idioma seleccionado en toda la aplicación.
+     */
     public static void showMenuIdiomas() {
         System.out.println("Seleccione el idioma de su preferencia");
         System.out.println("1. Español");
@@ -31,6 +44,7 @@ public class CLI {
                 System.out.println("Opcion no disponible");
         }
 
+        // Configura el idioma en las clases de procesamiento
         Multiplicacion.setLanguage(idiomas);
         Resta.setLanguage(idiomas);
         Potencia.setLanguage(idiomas);
@@ -39,9 +53,11 @@ public class CLI {
         Modulo.setLanguage(idiomas);
         Logaritmo.setLanguage(idiomas);
         Division.setLanguage(idiomas);
-
     }
 
+    /**
+     * Lanza la aplicación y maneja las operaciones matemáticas seleccionadas por el usuario.
+     */
     public static void launchApp() {
         int opcion;
         boolean continuar = true;
@@ -104,7 +120,6 @@ public class CLI {
                     System.out.println(idiomas.DEFAULT);
                     break;
             }
-
 
             if (!continuar) {
                 break;
