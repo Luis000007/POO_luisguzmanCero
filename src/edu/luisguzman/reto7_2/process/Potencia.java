@@ -1,11 +1,19 @@
 package edu.luisguzman.reto7_2.process;
 
+import edu.luisguzman.reto7_2.ui.Idiomas;
+
 import java.util.Scanner;
 
 /**
  * Esta clase proporciona un método estático para emular la operación de potenciación utilizando suma y resta.
  */
 public class Potencia {
+    private static Idiomas idiomas;
+
+    // Método para configurar el idioma
+    public static void setLanguage(Idiomas idiomas) {
+        Potencia.idiomas = idiomas;
+    }
 
     /**
      * Emula la operación de potenciación utilizando suma y resta y muestra el resultado.
@@ -13,14 +21,15 @@ public class Potencia {
      * @param scanner El objeto Scanner utilizado para leer la entrada del usuario.
      */
     public static void potencia(Scanner scanner) {
-        System.out.println("Ingrese la base");
+        // Acceder a las variables de idioma utilizando la instancia de Idiomas
+        System.out.println(idiomas.INGRESE_LA_BASE);
         int base = scanner.nextInt();
-        System.out.println("Ingrese el exponente");
+        System.out.println(idiomas.INGRESE_EXPONENTE);
         int exponente = scanner.nextInt();
 
-        // Manejar el caso especial donde el exponente es 0
+        // Verificar si el exponente es 0
         if (exponente == 0) {
-            System.out.println("El resultado es: 1");
+            System.out.println(idiomas.EL_RESULTADO + 1);
             return;
         }
 
@@ -33,7 +42,7 @@ public class Potencia {
         }
 
         // Mostrar el resultado de la potenciación
-        System.out.println("El resultado es: " + resultado);
+        System.out.println(idiomas.EL_RESULTADO + resultado);
     }
 
     /**
@@ -51,4 +60,3 @@ public class Potencia {
         return resultado;
     }
 }
-
