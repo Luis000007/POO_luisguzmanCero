@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class CLI {
 
     public static void main(String[] args) {
+
         Usuario usuario = new Usuario();
 
         boolean credencialesCorrectas = false;
