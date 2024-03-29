@@ -5,100 +5,131 @@ import edu.luisguzman.reto7_2.process.*;
 import java.util.Scanner;
 
 /**
- * Esta clase proporciona un menú de línea de comandos para interactuar con las operaciones matemáticas disponibles.
+ * Esta clase representa la interfaz de línea de comandos (CLI) para interactuar con las operaciones matemáticas.
  */
 public class CLI {
 
+    private static Idiomas idiomas;
+
+    private static final Scanner sc = new Scanner(System.in);
+
     /**
-     * El método principal que ejecuta el menú de línea de comandos.
+     * Punto de entrada principal del programa.
+     * Configura el idioma y lanza la aplicación.
      *
-     * @param args Los argumentos de la línea de comandos (no se utilizan en este caso).
+     * @param args Los argumentos de la línea de comandos (no utilizados en este caso).
      */
     public static void main(String[] args) {
+        idiomas = new Esp(); // Por defecto en español
+        launchApp();
+    }
 
+    /**
+     * Muestra el menú para seleccionar el idioma.
+     * Configura el idioma seleccionado en toda la aplicación.
+     */
+    public static void showMenuIdiomas() {
+        System.out.println("Seleccione el idioma de su preferencia");
+        System.out.println("1. Español");
+        System.out.println("2. English");
+        int opcion = sc.nextInt();
+        switch (opcion) {
+            case 1:
+                idiomas = new Esp();
+                break;
+            case 2:
+                idiomas = new Eng();
+                break;
+            default:
+                System.out.println("Opcion no disponible");
+        }
+
+        // Configura el idioma en las clases de procesamiento
+        Multiplicacion.setLanguage(idiomas);
+        Resta.setLanguage(idiomas);
+        Potencia.setLanguage(idiomas);
+        Raiz.setLanguage(idiomas);
+        Suma.setLanguage(idiomas);
+        Modulo.setLanguage(idiomas);
+        Logaritmo.setLanguage(idiomas);
+        Division.setLanguage(idiomas);
+    }
+
+    /**
+     * Lanza la aplicación y maneja las operaciones matemáticas seleccionadas por el usuario.
+     */
+    public static void launchApp() {
         int opcion;
         boolean continuar = true;
+        showMenuIdiomas();
 
         Scanner scanner = new Scanner(System.in);
 
-        // Ciclo principal para mostrar el menú y procesar las selecciones del usuario
         while (continuar) {
-            System.out.println("******¿Elige la operacion a realizar?******");
-            System.out.println("1. Suma");
-            System.out.println("2. Resta");
-            System.out.println("3. Multiplicacion");
-            System.out.println("4. Division");
-            System.out.println("5. Modulo");
-            System.out.println("6. Potencia");
-            System.out.println("7. Raiz");
-            System.out.println("8. Logaritmo");
-            System.out.println("9. Salir");
+            System.out.println(idiomas.MENU);
 
-            System.out.print("Seleccione la opción de su preferencia: ");
             opcion = scanner.nextInt();
 
-            // Procesar la selección del usuario utilizando una instrucción switch
             switch (opcion) {
                 case 1:
-                    System.out.println("Ha seleccionado: Suma");
+                    System.out.println(idiomas.SELECCION_SUMA);
                     Suma.suma(scanner);
                     break;
 
                 case 2:
-                    System.out.println("Ha seleccionado: Resta");
+                    System.out.println(idiomas.SELECCION_RESTA);
                     Resta.resta(scanner);
                     break;
 
                 case 3:
-                    System.out.println("Ha seleccionado: Multiplicacion");
+                    System.out.println(idiomas.SELECCION_MULTIPLICACION);
                     Multiplicacion.multiplicar(scanner);
                     break;
 
                 case 4:
-                    System.out.println("Ha seleccionado: Division");
+                    System.out.println(idiomas.SELECCION_DIVISION);
                     Division.dividir(scanner);
                     break;
 
                 case 5:
-                    System.out.println("Ha seleccionado: Modulo");
+                    System.out.println(idiomas.SELECCION_MODULO);
                     Modulo.modulo(scanner);
                     break;
 
                 case 6:
-                    System.out.println("Ha seleccionado: Potencia");
+                    System.out.println(idiomas.SELECCION_POTENCIA);
                     Potencia.potencia(scanner);
                     break;
 
                 case 7:
-                    System.out.println("Ha seleccionado: Raiz");
+                    System.out.println(idiomas.SELECCION_RAIZ);
                     Raiz.raizCuadrada(scanner);
                     break;
 
                 case 8:
-                    System.out.println("Ha seleccionado: Logaritmo");
+                    System.out.println(idiomas.SELECCION_LOGARITMO);
                     Logaritmo.logaritmo(scanner);
                     break;
 
                 case 9:
-                    System.out.println("Saliendo...");
+                    System.out.println(idiomas.SELECCION_SALIR);
                     continuar = false;
                     break;
 
                 default:
-                    System.out.println("No tenemos esa opción disponible");
+                    System.out.println(idiomas.DEFAULT);
                     break;
             }
 
-            // Verificar si el usuario desea continuar
             if (!continuar) {
                 break;
             }
 
-            System.out.print("¿Desea realizar otra operacion? (Si/No): ");
+            System.out.print(idiomas.OTRA_OPERACION);
             String respuesta = scanner.next();
-            continuar = respuesta.equalsIgnoreCase("Si");
+            continuar = respuesta.equalsIgnoreCase(idiomas.SI);
         }
 
-        System.out.print("Gracias por usar el programa :D");
+        System.out.print(idiomas.Despedida);
     }
 }
