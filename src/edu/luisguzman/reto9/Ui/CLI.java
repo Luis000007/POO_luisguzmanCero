@@ -1,3 +1,7 @@
+/**
+ * La clase CLI (Interfaz de Línea de Comandos) proporciona una interfaz de usuario simple para interactuar con el programa de conteo de palabras.
+ * Los usuarios pueden seleccionar el idioma en el que desean interactuar y luego elegir un libro para analizar.
+ */
 package edu.luisguzman.reto9.Ui;
 
 import edu.luisguzman.reto9.Process.TopWordsFinder;
@@ -6,13 +10,19 @@ import java.util.Scanner;
 
 public class CLI {
     private static Idiomas idiomas;
+
+    /**
+     * Método principal que inicia la aplicación de la Interfaz de Línea de Comandos (CLI).
+     * @param args Argumentos de la línea de comandos (no se utilizan en esta aplicación).
+     */
     public static void main(String[] args) {
         idiomas = new Esp();
-        idiomas = new Eng();
+        idiomas = new Eng(); // Se asigna un valor nuevo, pero no parece ser necesario ya que se sobreescribe inmediatamente después
         Scanner scanner = new Scanner(System.in);
 
         int opcionIdioma = 0;
 
+        // Bucle para seleccionar el idioma
         while (true) {
             System.out.println("********** BIENVENIDO AL CONTADOR DE PALABRAS :D **********");
             System.out.println("Selecciona el idioma de su preferencia");
@@ -33,27 +43,26 @@ public class CLI {
                 scanner.nextLine(); // Consumir la entrada inválida
             }
 
+            // Selección del idioma
             switch (opcionIdioma){
                 case 1:
-                    idiomas = new Esp();
-
+                    idiomas = new Esp(); // Seleccionar Español
                     break;
                 case 2:
-                    idiomas = new Eng();
-
+                    idiomas = new Eng(); // Seleccionar Inglés
                     break;
                 default:
                     System.out.println("Opción inválida. Por favor, selecciona 1 para Español o 2 para English.");
-
                     break;
-
             }
         }
 
+        // Configuración del idioma para la clase TopWordsFinder
         TopWordsFinder.setLanguage(idiomas);
 
         int opcionLibro = 0;
 
+        // Bucle para seleccionar el libro y realizar el análisis de palabras
         while (opcionLibro != 6) {
             System.out.println(idiomas.MENU);
 
@@ -66,6 +75,7 @@ public class CLI {
                 continue;
             }
 
+            // Selección del libro y procesamiento
             switch (opcionLibro) {
                 case 1:
                     System.out.println("**********************************************");
@@ -104,7 +114,10 @@ public class CLI {
         scanner.close(); // Cerrar el Scanner al salir del bucle principal
     }
 
-    // Método para procesar el libro seleccionado
+    /**
+     * Método para procesar el libro seleccionado y realizar el análisis de palabras.
+     * @param fileName El nombre del archivo del libro que se va a procesar.
+     */
     private static void procesarLibro(String fileName) {
         TopWordsFinder topWordsFinder = new TopWordsFinder();
         topWordsFinder.procesarLibro(fileName);

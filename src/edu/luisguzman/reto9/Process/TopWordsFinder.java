@@ -1,3 +1,6 @@
+/**
+ * La clase TopWordsFinder (Buscador de Palabras Clave) proporciona funcionalidades para procesar un archivo de texto y encontrar las palabras más utilizadas.
+ */
 package edu.luisguzman.reto9.Process;
 
 import edu.luisguzman.reto9.Ui.Idiomas;
@@ -11,11 +14,21 @@ import java.util.stream.Collectors;
 
 public class TopWordsFinder {
     private static Idiomas idiomas;
+
+    /**
+     * Establece el idioma para la clase TopWordsFinder.
+     * @param idiomas El idioma seleccionado.
+     */
     public static void setLanguage(Idiomas idiomas){
         TopWordsFinder.idiomas = idiomas;
     }
+
     private static final String CARACTERES_NO_ALFABETICOS = "[^a-zA-ZáéíóúüñÁÉÍÓÚÜÑ]";
 
+    /**
+     * Procesa el archivo de texto especificado y encuentra las 10 palabras más utilizadas.
+     * @param filePath La ruta del archivo de texto a procesar.
+     */
     public void procesarLibro(String filePath) {
         // Mapa para almacenar las palabras y su frecuencia
         Map<String, Integer> wordFrequencyMap = new HashMap<>();
@@ -51,7 +64,11 @@ public class TopWordsFinder {
         topWords.forEach((word, frequency) -> System.out.println(word + ": " + frequency));
     }
 
-    // Método para limpiar una palabra de caracteres no alfabéticos y convertirla a minúsculas
+    /**
+     * Limpia una palabra de caracteres no alfabéticos y la convierte a minúsculas.
+     * @param word La palabra a limpiar.
+     * @return La palabra limpiada.
+     */
     private String limpiarPalabra(String word) {
         return word.replaceAll(CARACTERES_NO_ALFABETICOS, "").toLowerCase();
     }
