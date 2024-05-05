@@ -14,30 +14,30 @@ public class CPU {
         inicializarTablero();
     }
 
-    public static void main(String[] args) throws IOException { // Clase principal
+    public static void main(String[] args) throws IOException {
         CPU maquina = new CPU();
         maquina.jugarConUsuario();
     }
 
-    public static void maquina(Scanner scanner) throws IOException {
-        CPU cpu = new CPU();
+    public static void maquina(Scanner scanner) {
+    }
+
+    public void jugarConUsuario() throws IOException {
         boolean terminar = false;
 
         do {
-            cpu.imprimirTablero();
-            cpu.registrarJugadaUsuario('X', scanner);
-            if (cpu.hayGanador('X')) {
-                cpu.imprimirTablero();
+            imprimirTablero();
+            registrarJugadaUsuario('X');
+            if (hayGanador('X')) {
                 System.out.println("¡Felicidades! ¡Has ganado!");
                 terminar = true;
-            } else if (!cpu.hayEspacio()) {
-                cpu.imprimirTablero();
+            } else if (!hayEspacio()) {
                 System.out.println("¡Empate! No quedan casillas disponibles.");
                 terminar = true;
             } else {
-                cpu.realizarMovimiento('O');
-                if (cpu.hayGanador('O')) {
-                    cpu.imprimirTablero();
+                realizarMovimiento('O');
+                if (hayGanador('O')) {
+                    imprimirTablero();
                     System.out.println("¡La CPU ha ganado!");
                     terminar = true;
                 }
@@ -45,10 +45,6 @@ public class CPU {
         } while (!terminar);
 
         scanner.close();
-    }
-
-    public void jugarConUsuario() throws IOException {
-        maquina(this.scanner);
     }
 
     private void imprimirTablero() {
@@ -71,14 +67,19 @@ public class CPU {
         System.out.println();
     }
 
-    private void registrarJugadaUsuario(char caracter, Scanner scanner) throws IOException {
+    private void registrarJugadaUsuario(char caracter) throws IOException {
         if (caracter == 'X') {
             int position;
             do {
                 System.out.println("Turno de " + (caracter == 'X' ? "jugador" : "la CPU"));
                 System.out.println("Ingresa un numero:");
                 position = scanner.nextInt();
-            } while (!casillaNoOcupada(position));
+                if (position < 1 || position > 9) {
+                    System.out.println("Casilla no válida, por favor elija una casilla válida.");
+                } else if (!casillaNoOcupada(position)) {
+                    System.out.println("Casilla ocupada, por favor elija una casilla válida.");
+                }
+            } while (position < 1 || position > 9 || !casillaNoOcupada(position));
 
             asignarMovimiento(position, caracter);
         }
@@ -195,3 +196,4 @@ public class CPU {
         }
     }
 }
+

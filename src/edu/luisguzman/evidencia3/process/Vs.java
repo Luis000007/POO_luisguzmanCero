@@ -97,7 +97,7 @@ public class Vs {
                 }
                 salir = true;
             } else {
-                System.out.println("Casilla ocupada, por favor elija una casilla valida");
+                System.out.println("Casilla no valida, por favor elija una casilla valida");
             }
         } while (!salir);
     }
