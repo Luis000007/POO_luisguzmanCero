@@ -11,45 +11,46 @@ public class Vs {
     public static char jugadorActual = 'X';
 
     public static void imprimirPosiciones() {
-        int pos = 1;
-        if (jugadorActual == 'X') {
-            System.out.println(" " + Nombre1 + " Observa el tablero y elige una posición sin ocupar");
-        } else {
-            System.out.println(" " + Nombre2 + " Observa el tablero y elige una posición sin ocupar");
-        }
+        System.out.println("Tablero:");
+        System.out.println("-------------");
+
+        int numCasilla = 1;
         for (int i = 0; i < matriz_gato.length; i++) {
             for (int j = 0; j < matriz_gato.length; j++) {
-                if (matriz_gato[i][j] == 'X' || matriz_gato[i][j] == 'O') {
-                    System.out.print(" " + matriz_gato[i][j]);
+                if (matriz_gato[i][j] == '-') {
+                    System.out.print("| " + numCasilla + " ");
                 } else {
-                    System.out.print(" " + pos);
+                    System.out.print("| " + matriz_gato[i][j] + " ");
                 }
-                pos++;
+                numCasilla++;
             }
-            System.out.println(); // Agregar una nueva línea después de imprimir cada fila
+            System.out.println("|");
+            System.out.println("-------------");
         }
+        System.out.println();
     }
+
 
     public static boolean casillaNoOcupada(int posicion) {
         switch (posicion) {
             case 1:
-                return matriz_gato[0][0] != ' ';
+                return matriz_gato[0][0] == '-';
             case 2:
-                return matriz_gato[0][1] != ' ';
+                return matriz_gato[0][1] == '-';
             case 3:
-                return matriz_gato[0][2] != ' ';
+                return matriz_gato[0][2] == '-';
             case 4:
-                return matriz_gato[1][0] != ' ';
+                return matriz_gato[1][0] == '-';
             case 5:
-                return matriz_gato[1][1] != ' ';
+                return matriz_gato[1][1] == '-';
             case 6:
-                return matriz_gato[1][2] != ' ';
+                return matriz_gato[1][2] == '-';
             case 7:
-                return matriz_gato[2][0] != ' ';
+                return matriz_gato[2][0] == '-';
             case 8:
-                return matriz_gato[2][1] != ' ';
+                return matriz_gato[2][1] == '-';
             case 9:
-                return matriz_gato[2][2] != ' ';
+                return matriz_gato[2][2] == '-';
             default:
                 return false;
         }
@@ -57,18 +58,13 @@ public class Vs {
 
     public static void registrarJugada(char caracter, Scanner scanner) throws IOException {
         boolean salir = false;
-        String entrada;
         int position;
         do {
             imprimirPosiciones();
-            if (jugadorActual == 'X') {
-                System.out.println("Ingresa un numero:");
-            } else {
-                System.out.println("Ingresa un numero:");
-            }
-
-            entrada = scanner.nextLine();
-            position = Integer.parseInt(entrada);
+            System.out.println("Turno de " + (jugadorActual == 'X' ? Nombre1 : Nombre2));
+            System.out.println("Ingresa un numero:");
+            position = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea pendiente
             if (casillaNoOcupada(position)) {
                 switch (position) {
                     case 1:
@@ -101,7 +97,7 @@ public class Vs {
                 }
                 salir = true;
             } else {
-                System.out.println("Casilla no valida, escribe una posición valida");
+                System.out.println("Casilla ocupada, por favor elija una casilla valida");
             }
         } while (!salir);
     }
@@ -137,17 +133,8 @@ public class Vs {
         return false;
     }
 
-    public static boolean hayganador(char caracter) { // Metodo para buscar un ganador
-        if (ganaPorRenglon(caracter)) { // Metodo para buscar un ganador por fila
-            return true;
-        }
-        if (ganaPorColumna(caracter)) { // Metodo para buscar un ganador por columna
-            return true;
-        }
-        if (ganaPorDiagonales(caracter)) { // Metodo para buscar un ganador por diagonales
-            return true;
-        }
-        return false;
+    public static boolean hayGanador(char caracter) { // Metodo para buscar un ganador
+        return ganaPorRenglon(caracter) || ganaPorColumna(caracter) || ganaPorDiagonales(caracter);
     }
 
     public static boolean hayEspacio() { // Metodo para evaluar si quedan espacios disponibles
@@ -185,56 +172,19 @@ public class Vs {
         boolean terminar = false;
         inicializarTablero(); // Metodo para crear el tablero
         nombres(scanner); // Metodos para capturar nombres de los jugadores
-        System.out.println("*********************** Instrucciones ***********************"
-                + "\n - Puede elegir cualquier casilla que contenga un numero"
-                + "\n - Las casillas que aparezcan con 'X' u 'O' ya estan ocupadas y no pueden ser seleccionadas"
-                + "\n - El primero en hacer una linea de tres 'X' u 'O' es el ganador"
-                + "\n ¡Mucha suerte! ");
+
         do {
             registrarJugada(jugadorActual, scanner); // Registra la jugada en turno
-            if (hayganador(jugadorActual)) { // Evalua si hay un ganador
-                if (jugadorActual == 'X') { // Gana el jugador 1
-                    System.out.println("Felicidades " + Nombre1 + " has ganado el juego");
-                    System.out.println("Tablero final:");
-                    int pos = 1;
-                    for (int i = 0; i < matriz_gato.length; i++) {
-                        for (int j = 0; j < matriz_gato.length; j++) {
-                            if (matriz_gato[i][j] == 'X' || matriz_gato[i][j] == 'O') {
-                                System.out.print(" " + matriz_gato[i][j]);
-                            } else {
-                                System.out.print(" " + pos);
-                            }
-                            pos++;
-                        }
-                        System.out.println();
-                    }
-                    terminar = true;
-                } else { // Gana el jugador 2
-                    System.out.println("Felicidades " + Nombre2 + " has ganado el juego");
-                    System.out.println("Tablero final:");
-                    int pos = 1;
-                    for (int i = 0; i < matriz_gato.length; i++) {
-                        for (int j = 0; j < matriz_gato.length; j++) {
-                            if (matriz_gato[i][j] == 'X' || matriz_gato[i][j] == 'O') {
-                                System.out.print(" " + matriz_gato[i][j]);
-                            } else {
-                                System.out.print(" " + pos);
-                            }
-                            pos++;
-                        }
-                        System.out.println();
-                    }
-                    terminar = true;
-                }
+            if (hayGanador(jugadorActual)) { // Evalua si hay un ganador
+                System.out.println("Felicidades " + (jugadorActual == 'X' ? Nombre1 : Nombre2) + " has ganado el juego");
+                imprimirPosiciones();
+                terminar = true;
+            } else if (!hayEspacio()) { // Metodo para evaluar si hay espacios disponibles
+                System.out.println("Ya no hay casillas disponibles, el juego se empato");
+                imprimirPosiciones();
+                terminar = true;
             } else {
-                if (!hayEspacio()) { // Metodo para evaluar si hay espacios disponibles
-                    System.out.println("Ya no hay casillas disponibles, el juego se empato");
-                    terminar = true;
-                } else if (jugadorActual == 'X') {
-                    jugadorActual = 'O';
-                } else {
-                    jugadorActual = 'X';
-                }
+                jugadorActual = (jugadorActual == 'X') ? 'O' : 'X'; // Cambiar al siguiente jugador
             }
         } while (!terminar);
     }

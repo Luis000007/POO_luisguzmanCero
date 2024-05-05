@@ -1,5 +1,6 @@
 package edu.luisguzman.evidencia3.Ui;
 
+import edu.luisguzman.evidencia3.process.CPU;
 import edu.luisguzman.evidencia3.process.Vs;
 
 import java.io.IOException;
@@ -41,10 +42,17 @@ public class CLI {
                 break;
         }
 
+        System.out.println("************************************** Instrucciones *******+******************************");
+        System.out.println("- Puede elegir cualquier casilla que contenga un numero");
+        System.out.println("- Las casillas que aparezcan con 'X' u 'O' ya estan ocupadas y no pueden ser seleccionadas");
+        System.out.println("- El primero en hacer una linea de tres 'X' u 'O' es el ganador");
+        System.out.println("¡Mucha suerte!");
+        System.out.println("**************************************************************+****************************");
+
+
         int opcionjuego = 0;
 
         while (true) {
-            System.out.println("*****************************");
             System.out.println("Elige un modo de juego");
             System.out.println("1. Jugar contra otro jugador");
             System.out.println("2. Jugar contra el CPU");
@@ -66,6 +74,7 @@ public class CLI {
             }
         }
 
+
         switch (opcionjuego) {
             case 1:
                 System.out.println("*******************************************");
@@ -76,7 +85,7 @@ public class CLI {
             case 2:
                 System.out.println("*******************************************");
                 System.out.println("Has seleccionado: Jugar contra el CPU");
-
+                CPU.maquina(scanner);
                 break;
         }
     }
