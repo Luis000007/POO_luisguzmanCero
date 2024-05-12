@@ -1,5 +1,7 @@
 package edu.luisguzman.evidencia3.process;
 
+import edu.luisguzman.evidencia3.Ui.CLI;
+
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
@@ -14,20 +16,17 @@ public class CPU {
         inicializarTablero();
     }
 
-    public static void main(String[] args) throws IOException {
-        CPU maquina = new CPU();
-        maquina.jugarConUsuario();
+    public static void maquina(Scanner scanner) throws IOException {
+        CPU cpu = new CPU();
+        cpu.jugarConUsuario(scanner);
     }
 
-    public static void maquina(Scanner scanner) {
-    }
-
-    public void jugarConUsuario() throws IOException {
+    public void jugarConUsuario(Scanner scanner) throws IOException {
         boolean terminar = false;
 
         do {
             imprimirTablero();
-            registrarJugadaUsuario('X');
+            registrarJugadaUsuario('X', scanner);
             if (hayGanador('X')) {
                 System.out.println("¡Felicidades! ¡Has ganado!");
                 terminar = true;
@@ -44,7 +43,60 @@ public class CPU {
             }
         } while (!terminar);
 
-        scanner.close();
+        // Después de que el juego haya terminado, preguntar al usuario si desea jugar de nuevo o ir al menú
+        mostrarMenu(scanner);
+    }
+
+    private void mostrarMenu(Scanner scanner) throws IOException {
+        // Muestra el menú y espera la entrada del usuario
+        System.out.println("******************************************");
+        System.out.println("¿Deseas jugar un nuevo juego o ir al menu?");
+        System.out.println("1. Juegar de nuevo");
+        System.out.println("2. Ir al menu");
+
+        int opcionCPU;
+
+        if (scanner.hasNextInt()) {
+            opcionCPU = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea pendiente
+
+            // Verifica si la opción es válida (1 o 2)
+            if (opcionCPU == 1 || opcionCPU == 2) {
+                // Ejecuta las opciones según lo seleccionado por el usuario
+                switch (opcionCPU) {
+                    case 1:
+                        System.out.println("******************");
+                        System.out.println("Iniciando juego...");
+                        // Reiniciar el juego
+                        reiniciarJuego();
+                        break;
+                    case 2:
+                        System.out.println("*******************************************");
+                        System.out.println("Regresando al menu...");
+                        CLI menu = new CLI(); // Crear una instancia de la clase CLI
+                        menu.contra(scanner); // Llamar al método contra con la instancia creada
+                        // Ir al menú
+                        // Aquí puedes implementar la lógica para ir al menú
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
+            }
+        } else {
+            System.out.println("Opción inválida. Por favor, ingresa una opción válida.");
+            scanner.nextLine(); // Consumir la entrada inválida
+        }
+    }
+
+    private void reiniciarJuego() {
+        inicializarTablero();
+        try {
+            jugarConUsuario(scanner);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void imprimirTablero() {
@@ -67,7 +119,7 @@ public class CPU {
         System.out.println();
     }
 
-    private void registrarJugadaUsuario(char caracter) throws IOException {
+    private void registrarJugadaUsuario(char caracter, Scanner scanner) throws IOException {
         if (caracter == 'X') {
             int position;
             do {
@@ -196,4 +248,3 @@ public class CPU {
         }
     }
 }
-
