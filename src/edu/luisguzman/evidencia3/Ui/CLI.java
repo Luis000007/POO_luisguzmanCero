@@ -1,5 +1,8 @@
 package edu.luisguzman.evidencia3.Ui;
 
+import edu.luisguzman.evidencia3.Idiomas.Eng;
+import edu.luisguzman.evidencia3.Idiomas.Esp;
+import edu.luisguzman.evidencia3.Idiomas.Idiomas;
 import edu.luisguzman.evidencia3.process.CPU;
 import edu.luisguzman.evidencia3.process.Vs;
 
@@ -7,7 +10,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class CLI {
+    private static Idiomas idiomas;
     public static void main(String[] args) throws IOException {
+        idiomas = new Esp();
         Scanner scanner = new Scanner(System.in);
         CLI menu = new CLI();
         menu.imprimirMenuInicial(scanner);
@@ -17,12 +22,9 @@ public class CLI {
         int opcionIdioma = 0;
 
         while (true) {
-            System.out.println("********** Bienvenido a Gato ***********");
+            System.out.println(idiomas.Bienvenido_a_gato);
 
-            System.out.println("Selecciona el idioma de tu preferencia");
-            System.out.println("1. Español");
-            System.out.println("2. English");
-            System.out.println("Ingresa un número:");
+            System.out.println(idiomas.Menu_idiomas);
 
             if (scanner.hasNextInt()) {
                 opcionIdioma = scanner.nextInt();
@@ -31,29 +33,24 @@ public class CLI {
                 if (opcionIdioma == 1 || opcionIdioma == 2) {
                     break;
                 } else {
-                    System.out.println("Opción inválida. Por favor, selecciona 1 para Español o 2 para English.");
+                    System.out.println(idiomas.Opcion_invalida_1_2);
                 }
             } else {
-                System.out.println("Opción inválida. Por favor, ingresa una opción válida.");
+                System.out.println(idiomas.Opcion_invalida);
                 scanner.nextLine();
             }
         }
 
         switch (opcionIdioma) {
             case 1:
-                System.out.println("Has seleccionado: Español");
+                idiomas = new Esp();
                 break;
             case 2:
-                System.out.println("You have selected: English");
+                idiomas = new Eng();
                 break;
         }
 
-        System.out.println("************************************** Instrucciones ****************************************");
-        System.out.println("- Puedes elegir cualquier casilla que contenga un número");
-        System.out.println("- Las casillas que aparezcan con 'X' u 'O' ya están ocupadas y no pueden ser seleccionadas");
-        System.out.println("- El primero en hacer una línea de tres 'X' u 'O' es el ganador");
-        System.out.println("¡Mucha suerte!");
-        System.out.println("************************************************************************************************");
+        System.out.println(idiomas.Instrucciones);
 
         contra(scanner);
     }
@@ -62,12 +59,7 @@ public class CLI {
         int opcionJuego = 0;
 
         while (true) {
-            System.out.println("*******************************************");
-            System.out.println("Elige un modo de juego");
-            System.out.println("1. Jugar contra otro jugador");
-            System.out.println("2. Jugar contra el CPU");
-            System.out.println("3. Salir del programa");
-            System.out.println("Ingresa un número:");
+            System.out.println(idiomas.Modo_de_juego);
 
             if (scanner.hasNextInt()) {
                 opcionJuego = scanner.nextInt();
@@ -77,33 +69,31 @@ public class CLI {
 
                     break;
                 } else {
-                    System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
+                    System.out.println(idiomas.Opcion_invalida);
                 }
             } else {
-                System.out.println("Opción inválida. Por favor, ingresa una opción válida.");
+                System.out.println(idiomas.Opcion_invalida);
                 scanner.nextLine();
             }
         }
 
         switch (opcionJuego) {
             case 1:
-                System.out.println("*******************************************");
-                System.out.println("Has seleccionado: Jugar contra otro jugador");
+                System.out.println(idiomas.Jugar_contra_jugador);
                 Vs.contra(scanner);
                 break;
             case 2:
-                System.out.println("*******************************************");
-                System.out.println("Has seleccionado: Jugar contra el CPU");
+                System.out.println(idiomas.Jugar_contra_CPU);
                 CPU.maquina(scanner);
                 break;
             case 3:
-                System.out.println("Gracias por jugar :D");
+                System.out.println(idiomas.Gracias_por_jugar);
                 break;
         }
 
         // Si se selecciona la opción 3, el programa termina
         if (opcionJuego == 3) {
-            System.out.println("Saliendo...");
+            System.out.println(idiomas.Saliendo);
         }
     }
 }

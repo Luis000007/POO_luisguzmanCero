@@ -1,11 +1,17 @@
 package edu.luisguzman.evidencia3.process;
 
+import edu.luisguzman.evidencia3.Idiomas.Idiomas;
 import edu.luisguzman.evidencia3.Ui.CLI;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Vs {
+    private static Idiomas idiomas;
+
+    public static void setLanguage(Idiomas idiomas) {
+        Vs.idiomas = idiomas;
+    }
 
     public static char[][] matriz_gato = new char[3][3];
     public static String Nombre1 = "";
@@ -35,11 +41,9 @@ public class Vs {
     }
 
     public static void seleccionarCaracteres(Scanner scanner) {
-        System.out.println("Jugador 1, por favor elija su caracter (*, +, $, X, O)");
-        System.out.println("Seleccione el caracter de su preferencia: ");
+        System.out.println("Jugador 1, por favor elija su caracter (*, +, $, X, O): ");
         jugador1 = scanner.next().charAt(0);
         System.out.println("Jugador 2, por favor elija su caracter (*, +, $, X, O): ");
-        System.out.println("Seleccione el caracter de su preferencia: ");
         jugador2 = scanner.next().charAt(0);
         scanner.nextLine(); // Consumir el salto de línea pendiente
     }

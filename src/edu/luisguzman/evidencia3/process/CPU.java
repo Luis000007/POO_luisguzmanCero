@@ -1,5 +1,6 @@
 package edu.luisguzman.evidencia3.process;
 
+import edu.luisguzman.evidencia3.Idiomas.Idiomas;
 import edu.luisguzman.evidencia3.Ui.CLI;
 
 import java.io.IOException;
@@ -7,6 +8,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class CPU {
+    private static Idiomas idiomas;
+
+    public static void setLanguage(Idiomas idiomas) {
+        CPU.idiomas = idiomas;
+    }
     private char[][] tablero;
     private Scanner scanner;
 
@@ -53,6 +59,7 @@ public class CPU {
         System.out.println("¿Deseas jugar un nuevo juego o ir al menu?");
         System.out.println("1. Juegar de nuevo");
         System.out.println("2. Ir al menu");
+        System.out.println("Ingresa el numero de la seleccion deseada: ");
 
         int opcionCPU;
 

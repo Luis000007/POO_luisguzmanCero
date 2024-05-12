@@ -7,6 +7,8 @@ public class Idiomas {
     public String Menu_idiomas;
     public String Opcion_invalida_1_2;
     public String Opcion_invalida;
+    public String Seleccion_Esp;
+    public String Seleccion_Eng;
     public String Instrucciones;
     public String Modo_de_juego;
     public String Jugar_contra_jugador;
