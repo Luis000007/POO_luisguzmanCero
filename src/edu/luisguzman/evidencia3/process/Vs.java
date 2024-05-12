@@ -21,7 +21,7 @@ public class Vs {
     public static char jugador2 = '-';
 
     public static void imprimirPosiciones() {
-        System.out.println("Tablero:");
+        System.out.println(idiomas.Tablero);
         System.out.println("-------------");
 
         int numCasilla = 1;
@@ -41,17 +41,17 @@ public class Vs {
     }
 
     public static void seleccionarCaracteres(Scanner scanner) {
-        System.out.println("Jugador 1, por favor elija su caracter (*, +, $, X, O): ");
+        System.out.println(idiomas.Jugadro1_Caracter);
         jugador1 = scanner.next().charAt(0);
-        System.out.println("Jugador 2, por favor elija su caracter (*, +, $, X, O): ");
+        System.out.println(idiomas.Jugador2_Caracter);
         jugador2 = scanner.next().charAt(0);
         scanner.nextLine(); // Consumir el salto de línea pendiente
     }
 
     public static void nombres(Scanner scanner) {
-        System.out.println("Nombre del jugador 1: ");
+        System.out.println(idiomas.Jugador1_Nombre);
         Nombre1 = scanner.nextLine();
-        System.out.println("Nombre del jugador 2: ");
+        System.out.println(idiomas.Jugador1_Nombre);
         Nombre2 = scanner.nextLine();
     }
 
@@ -70,10 +70,10 @@ public class Vs {
         do {
             registrarJugada(jugadorActual, scanner);
             if (hayGanador(jugadorActual)) {
-                System.out.println("Felicidades " + (jugadorActual == jugador1 ? Nombre1 : Nombre2) + " has ganado el juego");
+                System.out.println(idiomas.Felicidades + (jugadorActual == jugador1 ? Nombre1 : Nombre2) + idiomas.Has_ganado_el_juego);
                 terminar = true;
             } else if (!hayEspacio()) {
-                System.out.println("Ya no hay casillas disponibles, el juego se empato");
+                System.out.println(idiomas.Se_empato_el_juego);
                 terminar = true;
             } else {
                 jugadorActual = (jugadorActual == jugador1) ? jugador2 : jugador1;
@@ -85,10 +85,7 @@ public class Vs {
     }
 
     public static void mostrarMenu(Scanner scanner) throws IOException {
-        System.out.println("******************************************");
-        System.out.println("¿Qué deseas hacer ahora?");
-        System.out.println("1. Jugar un nuevo juego");
-        System.out.println("2. Ir al menú principal");
+        System.out.println(idiomas.Que_deseas_hacer_Vs);
 
         int opcionMenu;
 
@@ -99,24 +96,23 @@ public class Vs {
             if (opcionMenu == 1 || opcionMenu == 2) {
                 switch (opcionMenu) {
                     case 1:
-                        System.out.println("******************");
-                        System.out.println("Iniciando juego...");
+                        System.out.println(idiomas.Iniciando_juego);
+
                         inicializarTablero();
                         jugadorActual = jugador1;
                         contra(scanner);
                         break;
                     case 2:
-                        System.out.println("*********************");
-                        System.out.println("Regresando al menú principal...");
+                        System.out.println(idiomas.Regresando_al_menu);
                         CLI menu = new CLI();
                         menu.contra(scanner);
                         break;
                 }
             } else {
-                System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+                System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
             }
         } else {
-            System.out.println("Opción inválida. Por favor, ingresa una opción válida.");
+            System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
             scanner.nextLine(); // Consumir la entrada inválida
         }
     }
@@ -150,8 +146,8 @@ public class Vs {
         boolean salir = false;
         int posicion;
         do {
-            System.out.println("Turno de " + (caracter == jugador1 ? Nombre1 : Nombre2));
-            System.out.println("Ingresa un numero:");
+            System.out.println(idiomas.Turno_de + (caracter == jugador1 ? Nombre1 : Nombre2));
+            System.out.println(idiomas.Ingresa_un_numero);
             posicion = scanner.nextInt();
             scanner.nextLine(); // Consumir el salto de línea pendiente
             if (casillaNoOcupada(posicion)) {
@@ -186,7 +182,7 @@ public class Vs {
                 }
                 salir = true;
             } else {
-                System.out.println("Casilla no válida, por favor elija una casilla válida.");
+                System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
             }
         } while (!salir);
     }

@@ -34,16 +34,16 @@ public class CPU {
             imprimirTablero();
             registrarJugadaUsuario('X', scanner);
             if (hayGanador('X')) {
-                System.out.println("¡Felicidades! ¡Has ganado!");
+                System.out.println(idiomas.Felicidadess);
                 terminar = true;
             } else if (!hayEspacio()) {
-                System.out.println("¡Empate! No quedan casillas disponibles.");
+                System.out.println(idiomas.Empate);
                 terminar = true;
             } else {
                 realizarMovimiento('O');
                 if (hayGanador('O')) {
                     imprimirTablero();
-                    System.out.println("¡La CPU ha ganado!");
+                    System.out.println(idiomas.Gano_la_CPU);
                     terminar = true;
                 }
             }
@@ -55,11 +55,7 @@ public class CPU {
 
     private void mostrarMenu(Scanner scanner) throws IOException {
         // Muestra el menú y espera la entrada del usuario
-        System.out.println("******************************************");
-        System.out.println("¿Deseas jugar un nuevo juego o ir al menu?");
-        System.out.println("1. Juegar de nuevo");
-        System.out.println("2. Ir al menu");
-        System.out.println("Ingresa el numero de la seleccion deseada: ");
+        System.out.println(idiomas.Que_deseas_hacer_CPU);
 
         int opcionCPU;
 
@@ -72,14 +68,12 @@ public class CPU {
                 // Ejecuta las opciones según lo seleccionado por el usuario
                 switch (opcionCPU) {
                     case 1:
-                        System.out.println("******************");
-                        System.out.println("Iniciando juego...");
+                        System.out.println(idiomas.Iniciando_juego);
                         // Reiniciar el juego
                         reiniciarJuego();
                         break;
                     case 2:
-                        System.out.println("*******************************************");
-                        System.out.println("Regresando al menu...");
+                        System.out.println(idiomas.Regresando_al_menu);
                         CLI menu = new CLI(); // Crear una instancia de la clase CLI
                         menu.contra(scanner); // Llamar al método contra con la instancia creada
                         // Ir al menú
@@ -89,10 +83,10 @@ public class CPU {
                         break;
                 }
             } else {
-                System.out.println("Opción inválida. Por favor, seleccione una opción válida.");
+                System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
             }
         } else {
-            System.out.println("Opción inválida. Por favor, ingresa una opción válida.");
+            System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
             scanner.nextLine(); // Consumir la entrada inválida
         }
     }
@@ -107,7 +101,7 @@ public class CPU {
     }
 
     private void imprimirTablero() {
-        System.out.println("Tablero:");
+        System.out.println(idiomas.Tablero);
         System.out.println("-------------");
 
         int numCasilla = 1;
@@ -130,13 +124,13 @@ public class CPU {
         if (caracter == 'X') {
             int position;
             do {
-                System.out.println("Turno de " + (caracter == 'X' ? "jugador" : "la CPU"));
-                System.out.println("Ingresa un numero:");
+                System.out.println(idiomas.Turno_de + (caracter == 'X' ? idiomas.Jugador : idiomas.La_CPU));
+                System.out.println(idiomas.Ingresa_un_numero);
                 position = scanner.nextInt();
                 if (position < 1 || position > 9) {
-                    System.out.println("Casilla no válida, por favor elija una casilla válida.");
+                    System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
                 } else if (!casillaNoOcupada(position)) {
-                    System.out.println("Casilla ocupada, por favor elija una casilla válida.");
+                    System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
                 }
             } while (position < 1 || position > 9 || !casillaNoOcupada(position));
 
@@ -245,7 +239,7 @@ public class CPU {
 
     private void realizarMovimiento(char caracter) {
         if (caracter == 'O') {
-            System.out.println("Turno de la CPU");
+            System.out.println(idiomas.Turno_de_la_CPU);
             Random random = new Random();
             int position;
             do {
