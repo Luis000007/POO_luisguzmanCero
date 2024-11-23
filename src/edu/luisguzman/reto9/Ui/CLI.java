@@ -17,12 +17,12 @@ public class CLI {
      */
     public static void main(String[] args) {
         idiomas = new Esp();
-        idiomas = new Eng(); // Se asigna un valor nuevo, pero no parece ser necesario ya que se sobreescribe inmediatamente después
+        idiomas = new Eng();
         Scanner scanner = new Scanner(System.in);
 
         int opcionIdioma = 0;
 
-        // Bucle para seleccionar el idioma
+
         while (true) {
             System.out.println("********** BIENVENIDO AL CONTADOR DE PALABRAS :D **********");
             System.out.println("Selecciona el idioma de su preferencia");
@@ -31,25 +31,25 @@ public class CLI {
 
             if (scanner.hasNextInt()) {
                 opcionIdioma = scanner.nextInt();
-                scanner.nextLine(); // Consumir el salto de línea pendiente
+                scanner.nextLine();
 
                 if (opcionIdioma == 1 || opcionIdioma == 2) {
-                    break; // Salir del bucle si la opción es válida
+                    break;
                 } else {
                     System.out.println("Opción inválida. Por favor, selecciona 1 para Español o 2 para English.");
                 }
             } else {
                 System.out.println("Opcion inválida. Por favor, ingresa una opcion valida.");
-                scanner.nextLine(); // Consumir la entrada inválida
+                scanner.nextLine();
             }
 
-            // Selección del idioma
+
             switch (opcionIdioma){
                 case 1:
-                    idiomas = new Esp(); // Seleccionar Español
+                    idiomas = new Esp();
                     break;
                 case 2:
-                    idiomas = new Eng(); // Seleccionar Inglés
+                    idiomas = new Eng();
                     break;
                 default:
                     System.out.println("Opción inválida. Por favor, selecciona 1 para Español o 2 para English.");
@@ -57,25 +57,25 @@ public class CLI {
             }
         }
 
-        // Configuración del idioma para la clase TopWordsFinder
+
         TopWordsFinder.setLanguage(idiomas);
 
         int opcionLibro = 0;
 
-        // Bucle para seleccionar el libro y realizar el análisis de palabras
+
         while (opcionLibro != 6) {
             System.out.println(idiomas.MENU);
 
             if (scanner.hasNextInt()) {
                 opcionLibro = scanner.nextInt();
-                scanner.nextLine(); // Consumir el salto de línea pendiente
+                scanner.nextLine();
             } else {
                 System.out.println(idiomas.OPCIONNODISPONIBLE);
-                scanner.nextLine(); // Consumir la entrada inválida
+                scanner.nextLine();
                 continue;
             }
 
-            // Selección del libro y procesamiento
+
             switch (opcionLibro) {
                 case 1:
                     System.out.println("**********************************************");
@@ -111,7 +111,7 @@ public class CLI {
                     break;
             }
         }
-        scanner.close(); // Cerrar el Scanner al salir del bucle principal
+        scanner.close();
     }
 
     /**

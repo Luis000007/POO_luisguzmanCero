@@ -20,6 +20,7 @@ public class Idiomas {
     public String Tablero;
     public String Jugadro1_Caracter;
     public String Jugador2_Caracter;
+    public String Caracter_ya_seleccionado_intente_otro;
     public String Jugador1_Nombre;
     public String Jugador2_Nombre;
     public String Felicidades;
@@ -40,5 +41,8 @@ public class Idiomas {
     public String Jugador;
     public String La_CPU;
     public String Turno_de_la_CPU;
+    public String Ingresa_dos_numeros;
 
-}
+    }
+
+

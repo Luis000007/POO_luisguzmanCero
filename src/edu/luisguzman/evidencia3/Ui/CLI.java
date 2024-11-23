@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class CLI {
     private static Idiomas idiomas;
+
     public static void main(String[] args) throws IOException {
         idiomas = new Esp();
         Scanner scanner = new Scanner(System.in);
@@ -23,7 +24,6 @@ public class CLI {
 
         while (true) {
             System.out.println(idiomas.Bienvenido_a_gato);
-
             System.out.println(idiomas.Menu_idiomas);
 
             if (scanner.hasNextInt()) {
@@ -51,7 +51,6 @@ public class CLI {
         }
 
         System.out.println(idiomas.Instrucciones);
-
         contra(scanner);
     }
 
@@ -66,7 +65,6 @@ public class CLI {
                 scanner.nextLine();
 
                 if (opcionJuego >= 1 && opcionJuego <= 3) {
-
                     break;
                 } else {
                     System.out.println(idiomas.Opcion_invalida);
@@ -80,11 +78,11 @@ public class CLI {
         switch (opcionJuego) {
             case 1:
                 System.out.println(idiomas.Jugar_contra_jugador);
-                Vs.contra(scanner);
+                Vs.contra(scanner, idiomas);
                 break;
             case 2:
                 System.out.println(idiomas.Jugar_contra_CPU);
-                CPU.maquina(scanner);
+                CPU.maquina(scanner, idiomas);
                 break;
             case 3:
                 System.out.println(idiomas.Gracias_por_jugar);
@@ -97,4 +95,3 @@ public class CLI {
         }
     }
 }
-

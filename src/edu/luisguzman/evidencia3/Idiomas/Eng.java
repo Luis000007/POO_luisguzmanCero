@@ -16,7 +16,7 @@ public class Eng extends Idiomas {
                 "\n- The first to make a line of three 'X' or 'O' is the winner" +
                 "\n¡good luck!" +
                 "\n************************************************************************************************";
-        Modo_de_juego = "*******************************************\n" +
+        Modo_de_juego = "************************************************************************************************\n" +
                 "Choose a mode of play\n" +
                 "1. Play against another player\n" +
                 "2. Play against the CPU\n" +
@@ -35,6 +35,7 @@ public class Eng extends Idiomas {
                 "Select the character of your preference: ";
         Jugador2_Caracter = "Player 2, please choose your character (*, +, $, X, O):\n" +
                 "Select the character of your preference: ";
+        Caracter_ya_seleccionado_intente_otro = "Character already selected, try another";
         Jugador1_Nombre = "Player name 1: ";
         Jugador2_Nombre = "Player name 2: ";
         Felicidades = "Congratulations ";
@@ -65,6 +66,7 @@ public class Eng extends Idiomas {
         Jugador = "player";
         La_CPU = "the CPU";
         Turno_de_la_CPU = "Turn of the CPU";
+        Ingresa_dos_numeros = "enter two numbers";
 
     }
 }

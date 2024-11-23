@@ -16,7 +16,7 @@ public class Esp extends Idiomas {
                 "\n- El primero en hacer una línea de tres 'X' u 'O' es el ganador" +
                 "\n¡Mucha suerte!" +
                 "\n************************************************************************************************";
-        Modo_de_juego = "*******************************************\n" +
+        Modo_de_juego = "************************************************************************************************\n" +
                 "Elige un modo de juego\n" +
                 "1. Jugar contra otro jugador\n" +
                 "2. Jugar contra el CPU\n" +
@@ -35,6 +35,7 @@ public class Esp extends Idiomas {
                 "Seleccione el caracter de su preferencia: ";
         Jugador2_Caracter = "Jugador 2, por favor elija su caracter (*, +, $, X, O):\n" +
                 "Seleccione el caracter de su preferencia: ";
+        Caracter_ya_seleccionado_intente_otro = "Caracter ya seleccionado, intenta con otro";
         Jugador1_Nombre = "Nombre del jugador 1: ";
         Jugador2_Nombre = "Nombre del jugador 2: ";
         Felicidades = "Felicidades ";
@@ -65,6 +66,7 @@ public class Esp extends Idiomas {
         Jugador = "jugador";
         La_CPU = "la CPU";
         Turno_de_la_CPU = "Turno de la CPU";
+        Ingresa_dos_numeros = "ingresa dos numeros";
 
     }
 }

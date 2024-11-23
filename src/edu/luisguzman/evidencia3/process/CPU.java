@@ -1,214 +1,129 @@
 package edu.luisguzman.evidencia3.process;
 
-import edu.luisguzman.evidencia3.Idiomas.Idiomas;
 import edu.luisguzman.evidencia3.Ui.CLI;
+import edu.luisguzman.evidencia3.Idiomas.Idiomas;
 
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class CPU {
+    private char[][] tablero;
+    private Scanner scanner;
     private static Idiomas idiomas;
 
     public static void setLanguage(Idiomas idiomas) {
         CPU.idiomas = idiomas;
     }
-    private char[][] tablero;
-    private Scanner scanner;
 
-    public CPU() {
+    public static void maquina(Scanner scanner, Idiomas idiomas) throws IOException {
+        CPU cpu = new CPU(idiomas);
+        cpu.jugarConUsuario();
+    }
+
+    public CPU(Idiomas idiomas) {
         this.tablero = new char[3][3];
         this.scanner = new Scanner(System.in);
+        this.idiomas = idiomas;
         inicializarTablero();
     }
 
-    public static void maquina(Scanner scanner) throws IOException {
-        CPU cpu = new CPU();
-        cpu.jugarConUsuario(scanner);
-    }
-
-    public void jugarConUsuario(Scanner scanner) throws IOException {
+    public void jugarConUsuario() throws IOException {
         boolean terminar = false;
 
         do {
             imprimirTablero();
-            registrarJugadaUsuario('X', scanner);
+            registrarJugadaUsuario('X');
             if (hayGanador('X')) {
-                System.out.println(idiomas.Felicidadess);
+                System.out.println(idiomas.Felicidades + idiomas.Has_ganado_el_juego);
                 terminar = true;
             } else if (!hayEspacio()) {
-                System.out.println(idiomas.Empate);
+                System.out.println(idiomas.Se_empato_el_juego);
                 terminar = true;
             } else {
-                realizarMovimiento('O');
+                registrarJugadaCPU('O');
                 if (hayGanador('O')) {
-                    imprimirTablero();
-                    System.out.println(idiomas.Gano_la_CPU);
+                    System.out.println(idiomas.La_CPU + idiomas.Has_ganado_el_juego);
+                    terminar = true;
+                } else if (!hayEspacio()) {
+                    System.out.println(idiomas.Se_empato_el_juego);
                     terminar = true;
                 }
             }
         } while (!terminar);
 
-        // Después de que el juego haya terminado, preguntar al usuario si desea jugar de nuevo o ir al menú
-        mostrarMenu(scanner);
+        mostrarMenu();
     }
 
-    private void mostrarMenu(Scanner scanner) throws IOException {
-        // Muestra el menú y espera la entrada del usuario
-        System.out.println(idiomas.Que_deseas_hacer_CPU);
-
-        int opcionCPU;
-
-        if (scanner.hasNextInt()) {
-            opcionCPU = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea pendiente
-
-            // Verifica si la opción es válida (1 o 2)
-            if (opcionCPU == 1 || opcionCPU == 2) {
-                // Ejecuta las opciones según lo seleccionado por el usuario
-                switch (opcionCPU) {
-                    case 1:
-                        System.out.println(idiomas.Iniciando_juego);
-                        // Reiniciar el juego
-                        reiniciarJuego();
-                        break;
-                    case 2:
-                        System.out.println(idiomas.Regresando_al_menu);
-                        CLI menu = new CLI(); // Crear una instancia de la clase CLI
-                        menu.contra(scanner); // Llamar al método contra con la instancia creada
-                        // Ir al menú
-                        // Aquí puedes implementar la lógica para ir al menú
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
-            }
-        } else {
-            System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
-            scanner.nextLine(); // Consumir la entrada inválida
-        }
+    private void registrarJugadaCPU(char caracter) {
+        Random random = new Random();
+        int fila, columna;
+        do {
+            fila = random.nextInt(3);
+            columna = random.nextInt(3);
+        } while (tablero[fila][columna] != '-');
+        tablero[fila][columna] = caracter;
+        System.out.println(idiomas.Turno_de + idiomas.La_CPU + ":");
     }
 
-    private void reiniciarJuego() {
-        inicializarTablero();
-        try {
-            jugarConUsuario(scanner);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void registrarJugadaUsuario(char caracter) {
+        int seleccion;
+        do {
+            System.out.println(idiomas.Turno_de + idiomas.Jugador);
+            System.out.println(idiomas.Ingresa_un_numero);
+            seleccion = scanner.nextInt();
+        } while (!posicionValida(seleccion) || !casillaDisponible(seleccion));
+        marcarCasilla(seleccion, caracter);
+    }
+
+    private boolean posicionValida(int seleccion) {
+        return seleccion >= 1 && seleccion <= 9;
+    }
+
+    private boolean casillaDisponible(int seleccion) {
+        int fila = (seleccion - 1) / 3;
+        int columna = (seleccion - 1) % 3;
+        return tablero[fila][columna] == '-';
+    }
+
+    private void marcarCasilla(int seleccion, char caracter) {
+        int fila = (seleccion - 1) / 3;
+        int columna = (seleccion - 1) % 3;
+        tablero[fila][columna] = caracter;
     }
 
     private void imprimirTablero() {
         System.out.println(idiomas.Tablero);
         System.out.println("-------------");
-
-        int numCasilla = 1;
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero.length; j++) {
-                if (tablero[i][j] == '-') {
-                    System.out.print("| " + numCasilla + " ");
+        int contador = 1;
+        for (char[] fila : tablero) {
+            System.out.print("| ");
+            for (char casilla : fila) {
+                if (casilla == '-') {
+                    System.out.print(contador + " | ");
                 } else {
-                    System.out.print("| " + tablero[i][j] + " ");
+                    System.out.print(casilla + " | ");
                 }
-                numCasilla++;
+                contador++;
             }
-            System.out.println("|");
-            System.out.println("-------------");
-        }
-        System.out.println();
-    }
-
-    private void registrarJugadaUsuario(char caracter, Scanner scanner) throws IOException {
-        if (caracter == 'X') {
-            int position;
-            do {
-                System.out.println(idiomas.Turno_de + (caracter == 'X' ? idiomas.Jugador : idiomas.La_CPU));
-                System.out.println(idiomas.Ingresa_un_numero);
-                position = scanner.nextInt();
-                if (position < 1 || position > 9) {
-                    System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
-                } else if (!casillaNoOcupada(position)) {
-                    System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
-                }
-            } while (position < 1 || position > 9 || !casillaNoOcupada(position));
-
-            asignarMovimiento(position, caracter);
-        }
-    }
-
-    private boolean casillaNoOcupada(int posicion) {
-        switch (posicion) {
-            case 1:
-                return tablero[0][0] == '-';
-            case 2:
-                return tablero[0][1] == '-';
-            case 3:
-                return tablero[0][2] == '-';
-            case 4:
-                return tablero[1][0] == '-';
-            case 5:
-                return tablero[1][1] == '-';
-            case 6:
-                return tablero[1][2] == '-';
-            case 7:
-                return tablero[2][0] == '-';
-            case 8:
-                return tablero[2][1] == '-';
-            case 9:
-                return tablero[2][2] == '-';
-            default:
-                return false;
-        }
-    }
-
-    private void asignarMovimiento(int position, char caracter) {
-        switch (position) {
-            case 1:
-                tablero[0][0] = caracter;
-                break;
-            case 2:
-                tablero[0][1] = caracter;
-                break;
-            case 3:
-                tablero[0][2] = caracter;
-                break;
-            case 4:
-                tablero[1][0] = caracter;
-                break;
-            case 5:
-                tablero[1][1] = caracter;
-                break;
-            case 6:
-                tablero[1][2] = caracter;
-                break;
-            case 7:
-                tablero[2][0] = caracter;
-                break;
-            case 8:
-                tablero[2][1] = caracter;
-                break;
-            case 9:
-                tablero[2][2] = caracter;
-                break;
+            System.out.println("\n-------------");
         }
     }
 
     private boolean hayGanador(char caracter) {
-        // Evaluar filas
-        for (int i = 0; i < tablero.length; i++) {
+        // Verificar filas
+        for (int i = 0; i < 3; i++) {
             if (tablero[i][0] == caracter && tablero[i][1] == caracter && tablero[i][2] == caracter) {
                 return true;
             }
         }
-        // Evaluar columnas
-        for (int j = 0; j < tablero.length; j++) {
+        // Verificar columnas
+        for (int j = 0; j < 3; j++) {
             if (tablero[0][j] == caracter && tablero[1][j] == caracter && tablero[2][j] == caracter) {
                 return true;
             }
         }
-        // Evaluar diagonales
+        // Verificar diagonales
         if (tablero[0][0] == caracter && tablero[1][1] == caracter && tablero[2][2] == caracter) {
             return true;
         }
@@ -230,22 +145,41 @@ public class CPU {
     }
 
     private void inicializarTablero() {
-        for (int i = 0; i < tablero.length; i++) {
-            for (int j = 0; j < tablero.length; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 tablero[i][j] = '-';
             }
         }
     }
 
-    private void realizarMovimiento(char caracter) {
-        if (caracter == 'O') {
-            System.out.println(idiomas.Turno_de_la_CPU);
-            Random random = new Random();
-            int position;
-            do {
-                position = random.nextInt(9) + 1;
-            } while (!casillaNoOcupada(position));
-            asignarMovimiento(position, caracter);
+    private void mostrarMenu() throws IOException {
+        System.out.println(idiomas.Que_deseas_hacer_CPU);
+
+        int opcionMenu;
+
+        if (scanner.hasNextInt()) {
+            opcionMenu = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea pendiente
+
+            if (opcionMenu == 1 || opcionMenu == 2) {
+                switch (opcionMenu) {
+                    case 1:
+                        System.out.println(idiomas.Iniciando_juego);
+                        inicializarTablero(); // Reinicializar el tablero para un nuevo juego
+                        jugarConUsuario();
+                        break;
+                    case 2:
+                        System.out.println(idiomas.Regresando_al_menu);
+                        CLI menu = new CLI();
+                        menu.contra(scanner);
+                        break;
+                }
+            } else {
+                System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
+            }
+        } else {
+            System.out.println(idiomas.Casilla_no_valida_elige_una_valida);
+            scanner.nextLine(); // Consumir la entrada inválida
         }
     }
 }

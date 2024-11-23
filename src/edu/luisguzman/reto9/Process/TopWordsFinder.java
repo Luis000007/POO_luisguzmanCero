@@ -30,18 +30,18 @@ public class TopWordsFinder {
      * @param filePath La ruta del archivo de texto a procesar.
      */
     public void procesarLibro(String filePath) {
-        // Mapa para almacenar las palabras y su frecuencia
+
         Map<String, Integer> wordFrequencyMap = new HashMap<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
-            // Leer el libro línea por línea
+
             while ((line = br.readLine()) != null) {
-                // Dividir la línea en palabras usando espacio como separador
+
                 String[] words = line.split("\\s+");
-                // Actualizar el mapa de frecuencia de palabras
+
                 for (String word : words) {
-                    // Limpiar la palabra de caracteres no alfabéticos y convertirla a minúsculas
+
                     word = limpiarPalabra(word);
                     if (!word.isEmpty()) {
                         wordFrequencyMap.put(word, wordFrequencyMap.getOrDefault(word, 0) + 1);
@@ -53,13 +53,13 @@ public class TopWordsFinder {
             return;
         }
 
-        // Ordenar el mapa por valor (frecuencia) de manera descendente y limitar a las 10 palabras más utilizadas
+
         Map<String, Integer> topWords = wordFrequencyMap.entrySet().stream()
                 .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .limit(10)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-        // Imprimir las 10 palabras más utilizadas
+
         System.out.println(idiomas.PALABRASMASUTILIZADAS);
         topWords.forEach((word, frequency) -> System.out.println(word + ": " + frequency));
     }
